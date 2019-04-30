@@ -131,3 +131,25 @@
     »! ($0 * $1)
 
 ∎ X ⊢ Y » <glb_exp>
+
+M0 M1 M2 M3
+
+t0 m0 t1 m1 t2 m2 .. mn tn+1
+= (m0 t0 (m1 t1 (m2 t2 .. (mn tn tn+1))))
+= (m2 (m1 (m0 t0 t1) t2) t3) ..
+x m y = m x y =
+
+V H
+vh_term:
+  |
+  | term vh vh_term
+  ;
+term:
+  | t0 | t1 | t2 | ..
+  ;
+vh:
+  |
+  | V vh
+  | H vh
+  ;
+t0 VH t1 V t2
