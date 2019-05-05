@@ -98,7 +98,7 @@ vh_frm_code:
 tail_code:
   | ARR_END { None }
   | ARR vh_frm_code { Some $2 }
-  | coprd { $1 }
+  | coprd { $ }
   ;
 coprd:
   | CO_PRD_STT vh_frm_code coprd_tail END_CO_PRD vh_frm_code
@@ -139,18 +139,45 @@ exp_lst:
   | { [] }
   | exp_lst exp  { $1@[$2] }
   ;
-exp_top:
-  | exp { $1 }
-  ;
+
 exp:
+  | AGL exp_agl TEST { }
   | const { $1 }
-  | APP exp DOT exp { Exp.App ($2,$4) }
-  | exp PLS exp { Exp.Plus ($1,$3) }
-  | exp MLT exp { Exp.Mult ($1,$3) }
+  | APP exp_nml DOT exp_nml { Exp.App ($2,$4) }
+  | exp_nml PLS exp_nml { Exp.Plus ($1,$3) }
+  | exp_nml MLT exp_nml { Exp.Mult ($1,$3) }
   | L_PRN exp R_PRN { $2 }
-  | exp L_APP exp { Exp.L_App ($1,$3) }
+  | exp_nml L_APP exp_nml { Exp.L_App ($1,$3) }
   | L_RCD exp_lst R_RCD { Exp.Rcd $2 }
   ;
+exp_nml:
+  | const { $1 }
+  | APP exp_nml DOT exp_nml { Exp.App ($2,$4) }
+  | exp_nml PLS exp_nml { Exp.Plus ($1,$3) }
+  | exp_nml MLT exp_nml { Exp.Mult ($1,$3) }
+  | L_PRN exp R_PRN { $2 }
+  | exp_nml L_APP exp_nml { Exp.L_App ($1,$3) }
+  | L_RCD exp_nml_lst R_RCD { Exp.Rcd $2 }
+  ;
+exp_nml_lst:
+  | { [] }
+  | exp_nml_lst exp_nml  { $1@[$2] }
+  ;
+
+exp_agl:
+  | const { $1 }
+  | APP exp_nml DOT exp_nml { Exp.App ($2,$4) }
+  | exp_nml PLS exp_nml { Exp.Plus ($1,$3) }
+  | exp_nml MLT exp_nml { Exp.Mult ($1,$3) }
+  | L_PRN exp R_PRN { $2 }
+  | exp_nml L_APP exp_nml { Exp.L_App ($1,$3) }
+  | L_RCD exp_nml_lst R_RCD { Exp.Rcd $2 }
+  ;
+exp_agl_lst:
+  | { [] }
+  | exp_agl_lst exp_agl  { $1@[$2] }
+  ;
+
 const:
   | INT { Exp.Z $1 }
   | ROT { Exp.Root }
