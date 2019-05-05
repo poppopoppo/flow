@@ -1,0 +1,66 @@
+
+** Conflict (reduce/reduce) in state 67.
+** Tokens involved: R_RCD ROT L_RCD L_PRN INT GL_NAM APP
+** The following explanations concentrate on token R_RCD.
+** This state is reached from buffer after reading:
+
+exp_top_lst L_RCD 
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+buffer 
+vh_frm_top EOF 
+exp_top_lst 
+exp_top_lst exp_top 
+            (?)
+
+** In state 67, looking ahead at R_RCD, reducing production
+** exp_lst -> 
+** is permitted because of the following sub-derivation:
+
+exp_app 
+exp PLS exp 
+L_RCD exp_lst R_RCD // lookahead token appears
+      . 
+
+** In state 67, looking ahead at R_RCD, reducing production
+** exp_top_lst -> 
+** is permitted because of the following sub-derivation:
+
+L_RCD exp_top_lst R_RCD // lookahead token appears
+      . 
+
+** Conflict (reduce/reduce) in state 42.
+** Tokens involved: R_RCD ROT L_RCD L_PRN INT GL_NAM APP
+** The following explanations concentrate on token R_RCD.
+** This state is reached from buffer after reading:
+
+CNN L_RCD 
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+buffer 
+vh_frm_top EOF 
+CNN vh_frm_lst 
+    vh_frm 
+    h_frm tail 
+    exp_top 
+    (?)
+
+** In state 42, looking ahead at R_RCD, reducing production
+** exp_lst -> 
+** is permitted because of the following sub-derivation:
+
+exp_app 
+exp PLS exp 
+L_RCD exp_lst R_RCD // lookahead token appears
+      . 
+
+** In state 42, looking ahead at R_RCD, reducing production
+** exp_top_lst -> 
+** is permitted because of the following sub-derivation:
+
+L_RCD exp_top_lst R_RCD // lookahead token appears
+      . 

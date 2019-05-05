@@ -111,7 +111,7 @@ coprd_tail:
   ;
 vh_frm_top:
   | CNN vh_frm_lst  { Exp.Canon $2 }
-  | exp_lst { Exp.Exp (Exp.Rcd $1) }
+  | exp_top_lst { Exp.Exp (Exp.Rcd $1) }
   | EXP exp { Exp.Exp $2 }
   ;
 vh_frm_lst:
@@ -127,7 +127,7 @@ vh_frm:
     }
   ;
 h_frm:
-  | exp { Exp.Exp $1 }
+  | exp_top { Exp.Exp $1 }
   | L_RCD CNN vh_frm_lst R_RCD  { Exp.Canon $3 }
   ;
 tail:
@@ -140,15 +140,24 @@ exp_lst:
   | exp_lst exp  { $1@[$2] }
   ;
 exp_top:
-  | exp { $1 }
+  | AGL exp_app TEST
+  | exp_app
+  | L_RCD exp_top_lst R_RCD
   ;
-exp:
+exp_top_lst:
+  |
+  | exp_top_lst exp_top
+  ;
+exp_app:
   | const { $1 }
   | APP exp DOT exp { Exp.App ($2,$4) }
   | exp PLS exp { Exp.Plus ($1,$3) }
   | exp MLT exp { Exp.Mult ($1,$3) }
   | L_PRN exp R_PRN { $2 }
   | exp L_APP exp { Exp.L_App ($1,$3) }
+exp:
+  | AGL exp TEST { $2 }
+
   | L_RCD exp_lst R_RCD { Exp.Rcd $2 }
   ;
 const:
