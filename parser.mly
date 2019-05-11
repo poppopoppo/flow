@@ -137,6 +137,7 @@ tail_code:
   | ARR vh_frm_code { Some $2 }
   | coprd { $1 }
   ;
+
 coprd:
   | CO_PRD_STT vh_frm_code coprd_tail END_CO_PRD vh_frm_code
     { Some (Exp.CoPrd ([$2]@$3@[$5])) }
@@ -168,26 +169,10 @@ plc_ept:
   | ACT plc_top CLN { $2 }
   ;
 vh_frm_lst:
-  | vh_frm  { [$1] }
-  | vh_frm_lst M_CNN vh_frm { $1@[$3] }
+  | vh_frm_code  { [$1] }
+  | vh_frm_lst M_CNN vh_frm_code { $1@[$3] }
   ;
-vh_frm:
-  | h_frm tail
-    {
-      match $2 with
-      | None -> $1
-      | Some t -> Exp.Seq ($1,t)
-    }
-  ;
-h_frm:
-  | exp { Exp.Exp (Flow.Plc.Mt,$1) }
-  | L_RCD CNN vh_frm_lst R_RCD  { Exp.Canon $3 }
-  ;
-tail:
-  | ARR_END { None }
-  | ARR vh_frm { Some $2 }
-  | CO_PRD_STT vh_frm CO_PRD vh_frm END_CO_PRD  { Some (Exp.CoPrd [$2;$4]) }
-  ;
+
 exp_lst:
   | { [] }
   | exp_lst exp  { $1@[$2] }

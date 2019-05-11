@@ -325,3 +325,31 @@ parsing = code
 parsing program
 
 $ (= entire string for parsing)
+
+a ⊼ b ≃ b ⊼ a
+a ⊼ (b ⊼ c) ≃ (a ⊼ b) ⊼ c
+ℤ ⊼ ℤ ⊢ ! ℤ : + *
+
+
+  ∐ P0 : r0
+  ∐ P1 : r1
+  ∐ P2 : r2
+  ..
+  ∐ Pn : rn
+TKN0
+  > r0 / exp1 e2 e3 .. en |
+    .»
+    code0
+    ..
+    ».
+  > r1 /. |
+    .»
+    code1
+    ..
+    ».
+  >
+
+window system = window server which relay other window servers
+content window server = content server = intructive television
+各 content server には window 作成の「権限」は与えない
+widgetは原則使い捨て  ex. ボタン <-> 入力overflow は起こらない
